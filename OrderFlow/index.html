@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrderFlow API - 최두석 포트폴리오</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Malgun Gothic', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            color: white;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 0.5rem;
+        }
+
+        .dev-period {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: #764ba2;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            margin-bottom: 2rem;
+        }
+
+        .intro-box p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .intro-box strong {
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-item {
+            background: #f8f9fa;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+
+        .challenge-box {
+            background: #fff8e1;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 5px solid #ffa726;
+            margin-bottom: 1.5rem;
+        }
+
+        .challenge-title {
+            font-weight: bold;
+            color: #e65100;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .solution {
+            margin-top: 1rem;
+            padding-left: 1rem;
+            border-left: 3px solid #66bb6a;
+        }
+
+        .solution strong {
+            color: #2e7d32;
+        }
+
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .api-table th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .api-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .api-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .method-get {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .method-post {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 5px solid #4caf50;
+            margin-top: 1.5rem;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin-top: 1rem;
+            line-height: 1.8;
+        }
+
+        .learned-list {
+            background: #f3e5f5;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        .learned-list ul {
+            margin-left: 1.5rem;
+            line-height: 2;
+        }
+
+        .learned-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .quote {
+            font-style: italic;
+            font-size: 1.1rem;
+            text-align: center;
+            color: #764ba2;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #764ba2;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .main-content {
+                padding: 1.5rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛒 OrderFlow API</h1>
+            <p class="subtitle">Spring Boot + JPA + QueryDSL + JWT 기반 E-Commerce REST API</p>
+            <p class="dev-period">개발 기간: 2025.11.10 ~ 2025.12.10 (1개월)</p>
+            <div class="badges">
+                <span class="badge">Spring Boot 3.3.5</span>
+                <span class="badge">Java 21</span>
+                <span class="badge">MySQL 8.0</span>
+                <span class="badge">JWT</span>
+                <span class="badge">QueryDSL</span>
+                <span class="badge">Swagger</span>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <section class="section">
+                <h2>📋 프로젝트 소개</h2>
+                <div class="intro-box">
+                    <p><strong>백엔드 개발을 공부하며 처음부터 끝까지 완성한 전자상거래 REST API 프로젝트입니다.</strong></p>
+                    <p>자바와 스프링을 처음 접하면서 시작한 프로젝트로, 모든 용어가 낯설고 어디서부터 시작해야 할지 막막했습니다. 하지만 하나씩 찾아보고 코드를 작성해가며 완성할 수 있었습니다.</p>
+                    <p><strong>가장 보람찼던 순간:</strong> 내가 작성한 코드가 실제로 작동하고, Postman에서 API 응답이 정상적으로 나올 때의 성취감이 정말 컸습니다. "200 OK"라는 메시지를 볼 때마다 더 공부하고 싶어졌습니다.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <strong>🎯 개발 목표:</strong> 실무에서 사용되는 기술 스택을 활용하여 확장 가능하고 유지보수가 용이한 REST API 서버를 구축하는 것
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>✨ 주요 기능</h2>
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon">👤</div>
+                        <div class="feature-title">회원 관리</div>
+                        <p>회원가입, 로그인, JWT 토큰 기반 인증/인가 구현</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📦</div>
+                        <div class="feature-title">상품 관리</div>
+                        <p>상품 등록, 조회, 페이징, QueryDSL 동적 검색</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛍️</div>
+                        <div class="feature-title">주문 관리</div>
+                        <p>주문 생성/취소, 재고 관리, 취소 이력 추적</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔐</div>
+                        <div class="feature-title">보안</div>
+                        <p>Spring Security, 비밀번호 암호화, JWT 인증</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📖</div>
+                        <div class="feature-title">API 문서</div>
+                        <p>Swagger/OpenAPI 자동 문서화</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <div class="feature-title">예외 처리</div>
+                        <p>전역 예외 처리, 일관된 에러 응답</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>🛠 기술 스택</h2>
+                <div class="tech-stack">
+                    <div class="tech-item">Spring Boot 3.3.5</div>
+                    <div class="tech-item">Java 21</div>
+                    <div class="tech-item">Spring Data JPA</div>
+                    <div class="tech-item">QueryDSL 5.0</div>
+                    <div class="tech-item">Spring Security</div>
+                    <div class="tech-item">JWT (jjwt 0.11.5)</div>
+                    <div class="tech-item">MySQL 8.0</div>
+                    <div class="tech-item">Swagger/OpenAPI 3.0</div>
+                    <div class="tech-item">Gradle</div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>💡 핵심 구현 내용</h2>
+                
+                <h3>1. JWT 인증/인가 시스템</h3>
+                <div class="code-block">
+// JwtFilter에서 Bearer 토큰 검증<br>
+String authHeader = request.getHeader("Authorization");<br>
+if (authHeader != null && authHeader.startsWith("Bearer ")) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;String token = authHeader.substring(7);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;String username = jwtUtil.validateAndGetUsername(token);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// SecurityContext에 인증 정보 저장<br>
+}
+                </div>
+                <div class="learned-list">
+                    <strong>배운 점:</strong>
+                    <ul>
+                        <li>Bearer 토큰 방식의 인증 흐름 이해</li>
+                        <li>Spring Security FilterChain 동작 원리</li>
+                        <li>Stateless 인증의 장점</li>
+                    </ul>
+                </div>
+
+                <h3>2. QueryDSL 동적 쿼리</h3>
+                <div class="code-block">
+// 상품 검색 - 조건이 있을 때만 where 절에 추가<br>
+BooleanBuilder builder = new BooleanBuilder();<br>
+<br>
+if (name != null) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;builder.and(product.name.containsIgnoreCase(name));<br>
+}<br>
+if (minPrice != null) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;builder.and(product.price.goe(minPrice));<br>
+}<br>
+if (maxPrice != null) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;builder.and(product.price.loe(maxPrice));<br>
+}
+                </div>
+                <div class="learned-list">
+                    <strong>배운 점:</strong>
+                    <ul>
+                        <li>동적 쿼리의 필요성과 구현 방법</li>
+                        <li>QueryDSL의 타입 세이프한 쿼리 작성</li>
+                        <li>페이징과 정렬을 함께 적용하는 방법</li>
+                    </ul>
+                </div>
+
+                <h3>3. 주문 취소 비즈니스 로직</h3>
+                <div class="code-block">
+// 주문 취소 가능 여부 검증<br>
+1. 본인의 주문인지 확인<br>
+2. 주문 30분 이내인지 확인<br>
+3. 이미 취소/배송 중인지 확인<br>
+4. 주문 취소 처리<br>
+5. 재고 자동 복구<br>
+6. 취소 이력 저장
+                </div>
+                <div class="learned-list">
+                    <strong>배운 점:</strong>
+                    <ul>
+                        <li>비즈니스 규칙을 코드로 구현하는 방법</li>
+                        <li>@Transactional의 중요성</li>
+                        <li>도메인 엔티티에 비즈니스 로직 캡슐화</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>🎯 개발 과정에서의 도전과 해결</h2>
+                
+                <div class="challenge-box">
+                    <div class="challenge-title">도전 1: 자바와 스프링 용어의 벽</div>
+                    <p><strong>어려웠던 점:</strong> Bean, IoC, DI, 어노테이션(@)... 처음 보는 용어들이 너무 많았습니다.</p>
+                    <div class="solution">
+                        <strong>해결 방법:</strong>
+                        <ul>
+                            <li>모르는 용어가 나올 때마다 검색하고 노트에 정리</li>
+                            <li>스프링 공식 문서를 여러 번 반복해서 읽음</li>
+                            <li>코드를 직접 작성하며 체득</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="challenge-box">
+                    <div class="challenge-title">도전 2: JPA 연관관계 이해</div>
+                    <p><strong>어려웠던 점:</strong> Member, Product, Orders의 관계 설정. N+1 문제, LazyInitializationException 에러 발생.</p>
+                    <div class="solution">
+                        <strong>해결 방법:</strong>
+                        <ul>
+                            <li>FetchType.LAZY를 사용하여 성능 개선</li>
+                            <li>필요한 경우에만 fetch join 사용</li>
+                            <li>양방향 연관관계보다 단방향 우선 사용</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="challenge-box">
+                    <div class="challenge-title">도전 3: QueryDSL Q클래스 생성 실패</div>
+                    <p><strong>어려웠던 점:</strong> Gradle 설정이 복잡하고, Q클래스가 자동 생성되지 않았습니다.</p>
+                    <div class="solution">
+                        <strong>해결 방법:</strong>
+                        <ul>
+                            <li>build.gradle에 QueryDSL 의존성 올바르게 추가</li>
+                            <li>./gradlew clean build로 재빌드</li>
+                            <li>annotationProcessor 설정 확인</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>💪 가장 보람찼던 순간:</strong>
+                    <p style="margin-top: 0.5rem;">Postman에서 주문 생성 API를 호출했을 때 "200 OK"가 나오고, 내가 작성한 코드로 데이터베이스에 주문 데이터가 저장되는 것을 확인했을 때입니다. JWT 토큰으로 인증에 성공하고, 재고가 자동으로 감소하는 것을 보며 큰 성취감을 느꼈습니다.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>📖 주요 API 목록</h2>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Endpoint</th>
+                            <th>설명</th>
+                            <th>인증</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="method method-post">POST</span></td>
+                            <td>/members</td>
+                            <td>회원가입</td>
+                            <td>❌</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method method-post">POST</span></td>
+                            <td>/members/login</td>
+                            <td>로그인 (JWT 발급)</td>
+                            <td>❌</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method method-get">GET</span></td>
+                            <td>/products</td>
+                            <td>상품 목록 조회 (페이징)</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method method-get">GET</span></td>
+                            <td>/products/search</td>
+                            <td>상품 검색 (이름/가격)</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method method-post">POST</span></td>
+                            <td>/orders</td>
+                            <td>주문 생성</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method method-post">POST</span></td>
+                            <td>/orders/{id}/cancel</td>
+                            <td>주문 취소</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method method-get">GET</span></td>
+                            <td>/orders/cancel/history</td>
+                            <td>주문 취소 이력 조회</td>
+                            <td>✅</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2>📚 개발하며 배운 것들</h2>
+                <div class="learned-list">
+                    <ul>
+                        <li><strong>Spring Boot 생태계:</strong> 의존성 주입, Bean 라이프사이클, 계층형 아키텍처</li>
+                        <li><strong>데이터베이스 관리:</strong> JPA 영속성 컨텍스트, 연관관계, 트랜잭션</li>
+                        <li><strong>보안의 기초:</strong> 비밀번호 암호화, JWT 인증, Spring Security 필터</li>
+                        <li><strong>RESTful API 설계:</strong> HTTP 메서드, 상태 코드, 일관된 응답 구조</li>
+                        <li><strong>문제 해결 능력:</strong> 에러 메시지 해석, 공식 문서 활용, 디버깅 방법</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>📈 향후 개선 계획</h2>
+                <ul style="line-height: 2.2; margin-left: 2rem; margin-top: 1rem;">
+                    <li>✅ 테스트 코드 작성 (JUnit 5, MockMvc)</li>
+                    <li>✅ Redis 캐싱으로 상품 조회 성능 개선</li>
+                    <li>✅ 동시성 제어 (재고 관리 낙관적/비관적 락)</li>
+                    <li>✅ Docker Compose로 개발 환경 표준화</li>
+                    <li>✅ GitHub Actions CI/CD 파이프라인 구축</li>
+                    <li>✅ AWS 배포 (EC2, RDS)</li>
+                </ul>
+            </section>
+
+            <div class="quote">
+                "처음에는 모든 게 낯설고 어려웠지만, 하나씩 배워가며 완성한 프로젝트입니다.<br>
+                코드가 작동하고 API 응답이 나올 때마다 느끼는 성취감이 저를 계속 앞으로 나아가게 했습니다."
+            </div>
+
+            <div class="cta-buttons">
+                <a href="https://github.com/dooseok913/spring-jwt-shop-restapi" class="btn btn-primary" target="_blank">
+                    🔗 GitHub 저장소 보기
+                </a>
+                <a href="http://localhost:8080/swagger-ui.html" class="btn btn-secondary" target="_blank">
+                    📖 API 문서 (Swagger)
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>최두석</strong> | Backend Developer</p>
+            <p style="margin-top: 0.5rem;">동국대학교 경제학과 졸업 (2010.02)</p>
+            <p style="margin-top: 0.5rem; opacity: 0.9;">
+                📧 cds1745@naver.com | 
+                💼 <a href="https://github.com/dooseok913" style="color: white; text-decoration: none;">GitHub</a>
+            </p>
+            <p style="margin-top: 1rem; opacity: 0.8; font-size: 0.9rem;">
+                © 2025 OrderFlow API Portfolio
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
