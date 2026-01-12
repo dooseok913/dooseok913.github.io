@@ -495,6 +495,36 @@ if (maxPrice != null) {<br>
                 <h2>🎯 개발 과정에서의 도전과 해결</h2>
                 
                 <div class="challenge-box">
+                    <div class="challenge-title">도전 0: JWT 인증 구조 이해 부족</div>
+
+                    <p>
+                        <strong>문제 상황:</strong>
+                        프로젝트 초반, JWT 기반 인증 구조에 대한 이해 부족으로
+                        인증이 필요한 API 연동 과정에서 오류가 반복적으로 발생했습니다.
+                    </p>
+
+                    <div class="solution">
+                        <strong>해결 과정:</strong>
+                        <ul>
+                        <li>전체 요청 흐름(로그인 → 토큰 발급 → 토큰 검증)을 단계별로 정리</li>
+                        <li>Postman을 활용해 인증/비인증 API 요청을 직접 테스트</li>
+                        <li>Spring Security FilterChain에서 인증 처리 과정을 코드로 추적</li>
+                        </ul>
+                    </div>
+
+                    <p style="margin-top: 1rem;">
+                        <strong>결과 및 배운 점:</strong>
+                        인증이 필요한 API 요청을 안정적으로 처리할 수 있었으며,
+                        기능 구현보다 <strong>서비스 전체 요청 흐름을 먼저 이해하는 것이
+                        중요하다는 점</strong>을 배웠습니다.
+                    </p>
+                </div>
+    
+
+
+
+
+                <div class="challenge-box">
                     <div class="challenge-title">도전 1: 자바와 스프링 용어의 벽</div>
                     <p><strong>어려웠던 점:</strong> Bean, IoC, DI, 어노테이션(@)... 처음 보는 용어들이 너무 많았습니다.</p>
                     <div class="solution">
