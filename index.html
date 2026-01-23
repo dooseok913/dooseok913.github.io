@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Inter', 'Segoe UI', sans-serif;
             line-height: 1.6;
@@ -22,12 +23,12 @@
             min-height: 100vh;
             padding: 20px;
         }
-        
+
         .container {
             max-width: 1400px;
             margin: 0 auto;
         }
-        
+
         /* Hero Section */
         header {
             text-align: center;
@@ -35,29 +36,29 @@
             padding: 80px 20px 60px;
             margin-bottom: 60px;
         }
-        
+
         header h1 {
             font-size: 3.5em;
             font-weight: 700;
             margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             animation: fadeInDown 1s ease-out;
         }
-        
+
         header .subtitle {
             font-size: 1.3em;
             opacity: 0.95;
             margin-bottom: 10px;
             animation: fadeInUp 1s ease-out 0.2s backwards;
         }
-        
+
         header .tagline {
             font-size: 1.1em;
             opacity: 0.85;
             margin-top: 20px;
             animation: fadeInUp 1s ease-out 0.4s backwards;
         }
-        
+
         /* Contact Info */
         .contact-info {
             display: flex;
@@ -67,7 +68,7 @@
             flex-wrap: wrap;
             animation: fadeInUp 1s ease-out 0.6s backwards;
         }
-        
+
         .contact-item {
             display: flex;
             align-items: center;
@@ -81,58 +82,61 @@
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        
+
         .contact-item:hover {
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
-        
-        /* Category Section */
+
+        /* Category Section - Container Style */
         .category-section {
             margin-bottom: 60px;
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            animation: slideInLeft 0.8s ease-out;
         }
-        
+
         .category-header {
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-bottom: 30px;
-            padding: 20px 30px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            animation: slideInLeft 0.8s ease-out;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 3px solid #f0f0f0;
         }
-        
+
         .category-icon {
             font-size: 3em;
         }
-        
+
         .category-title h2 {
             font-size: 2.2em;
             font-weight: 700;
             margin-bottom: 5px;
+            color: #333;
         }
-        
+
         .category-title p {
             color: #666;
             font-size: 1.05em;
         }
-        
+
         /* Project Cards Grid */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 30px;
         }
-        
+
         /* Project Card */
         .project-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 35px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             text-decoration: none;
@@ -141,51 +145,53 @@
             position: relative;
             overflow: hidden;
             animation: fadeInUp 0.8s ease-out;
+            border: 2px solid transparent;
         }
-        
+
         .project-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 5px;
+            height: 4px;
             background: linear-gradient(90deg, var(--card-gradient-start), var(--card-gradient-end));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
-        
+
         .project-card:hover::before {
-            transform: scaleX(1);
+            opacity: 1;
         }
-        
+
         .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border-color: var(--card-gradient-start);
+            background: white;
         }
-        
+
         .project-card h3 {
             font-size: 1.8em;
             font-weight: 700;
             margin-bottom: 15px;
             color: #333;
         }
-        
+
         .project-card .project-description {
             font-size: 1.05em;
             color: #666;
             line-height: 1.8;
             margin-bottom: 20px;
         }
-        
+
         .project-tech {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 20px;
         }
-        
+
         .tech-tag {
             padding: 6px 14px;
             background: linear-gradient(135deg, var(--card-gradient-start), var(--card-gradient-end));
@@ -194,7 +200,7 @@
             font-size: 0.85em;
             font-weight: 500;
         }
-        
+
         .project-arrow {
             position: absolute;
             bottom: 30px;
@@ -204,28 +210,28 @@
             transform: translateX(-10px);
             transition: all 0.4s ease;
         }
-        
+
         .project-card:hover .project-arrow {
             opacity: 1;
             transform: translateX(0);
         }
-        
+
         /* Color Schemes */
         .java-card {
             --card-gradient-start: #f093fb;
             --card-gradient-end: #f5576c;
         }
-        
+
         .python-card {
             --card-gradient-start: #4facfe;
             --card-gradient-end: #00f2fe;
         }
-        
+
         .ai-card {
             --card-gradient-start: #43e97b;
             --card-gradient-end: #38f9d7;
         }
-        
+
         /* Footer */
         footer {
             text-align: center;
@@ -234,86 +240,89 @@
             margin-top: 60px;
             border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
-        
+
         footer p {
             opacity: 0.9;
             margin: 5px 0;
         }
-        
+
         /* Animations */
         @keyframes fadeInDown {
             from {
                 opacity: 0;
                 transform: translateY(-30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
+
         @keyframes slideInLeft {
             from {
                 opacity: 0;
                 transform: translateX(-50px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
             }
         }
-        
+
         /* Responsive Design */
         @media (max-width: 768px) {
             header h1 {
                 font-size: 2.5em;
             }
-            
+
             header .subtitle {
                 font-size: 1.1em;
             }
-            
+
             .projects-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .category-header {
                 padding: 15px 20px;
             }
-            
+
             .category-icon {
                 font-size: 2em;
             }
-            
+
             .category-title h2 {
                 font-size: 1.6em;
             }
-            
+
             .project-card {
                 padding: 30px;
             }
-            
+
             .contact-info {
                 gap: 15px;
             }
         }
-        
+
         @media (max-width: 480px) {
             header h1 {
                 font-size: 2em;
             }
-            
+
             .contact-info {
                 flex-direction: column;
                 align-items: center;
@@ -321,6 +330,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Hero Section -->
@@ -328,7 +338,7 @@
             <h1>💼 최두석 포트폴리오</h1>
             <p class="subtitle">Full-Stack Developer & AI Engineer</p>
             <p class="tagline">Java · Python · Machine Learning · Deep Learning · LLM</p>
-            
+
             <div class="contact-info">
                 <a href="mailto:cds1745@naver.com" class="contact-item">
                     📧 cds1745@naver.com
@@ -339,27 +349,42 @@
             </div>
         </header>
 
-        <!-- Java - RestAPI Section -->
+        <!-- AI Section -->
         <section class="category-section">
             <div class="category-header">
-                <div class="category-icon">☕</div>
+                <div class="category-icon">🤖</div>
                 <div class="category-title">
-                    <h2>Java - RestAPI</h2>
-                    <p>Spring Boot 기반 백엔드 시스템</p>
+                    <h2>AI (머신러닝, 딥러닝, LLM)</h2>
+                    <p>데이터 분석 및 인공지능 프로젝트</p>
                 </div>
             </div>
-            
+
             <div class="projects-grid">
-                <a href="OrderFlow/index.html" class="project-card java-card">
-                    <h3>🏪 OrderFlow</h3>
+                <a href="coffee/index.html" class="project-card ai-card">
+                    <h3>☕ Coffee 가격 예측</h3>
                     <p class="project-description">
-                        Spring Boot와 JPA를 활용한 주문 관리 시스템. RESTful API 설계와 데이터베이스 최적화를 통해 효율적인 주문 처리 플로우를 구현했습니다.
+                        기후 데이터와 시장 데이터를 결합하여 커피 가격을 예측하는 머신러닝 모델. Random Forest로 ROC-AUC 0.75 달성하고 Streamlit 웹앱으로
+                        배포했습니다.
                     </p>
                     <div class="project-tech">
-                        <span class="tech-tag">Spring Boot</span>
-                        <span class="tech-tag">JPA/Hibernate</span>
-                        <span class="tech-tag">MySQL</span>
-                        <span class="tech-tag">REST API</span>
+                        <span class="tech-tag">Scikit-learn</span>
+                        <span class="tech-tag">Random Forest</span>
+                        <span class="tech-tag">Streamlit</span>
+                        <span class="tech-tag">FRED API</span>
+                    </div>
+                    <span class="project-arrow">→</span>
+                </a>
+
+                <a href="seoul-commercial-district/index.html" class="project-card ai-card">
+                    <h3>🏙️ Seoul Commercial District</h3>
+                    <p class="project-description">
+                        서울 상권 데이터를 분석하고 LLM과 RAG를 활용한 상권 분석 AI 에이전트. 다중 에이전트 시스템으로 맞춤형 창업 컨설팅을 제공합니다.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">LangChain</span>
+                        <span class="tech-tag">LangGraph</span>
+                        <span class="tech-tag">RAG</span>
+                        <span class="tech-tag">Multi-Agent</span>
                     </div>
                     <span class="project-arrow">→</span>
                 </a>
@@ -375,7 +400,7 @@
                     <p>경량 웹 프레임워크 기반 애플리케이션</p>
                 </div>
             </div>
-            
+
             <div class="projects-grid">
                 <a href="listify/index.html" class="project-card python-card">
                     <h3>📝 Listify</h3>
@@ -393,41 +418,41 @@
             </div>
         </section>
 
-        <!-- AI Section -->
+        <!-- Java - RestAPI Section -->
         <section class="category-section">
             <div class="category-header">
-                <div class="category-icon">🤖</div>
+                <div class="category-icon">☕</div>
                 <div class="category-title">
-                    <h2>AI (머신러닝, 딥러닝, LLM)</h2>
-                    <p>데이터 분석 및 인공지능 프로젝트</p>
+                    <h2>Java - RestAPI</h2>
+                    <p>Spring Boot 기반 백엔드 시스템</p>
                 </div>
             </div>
-            
+
             <div class="projects-grid">
-                <a href="coffee/index.html" class="project-card ai-card">
-                    <h3>☕ Coffee 가격 예측</h3>
+                <a href="OrderFlow/index.html" class="project-card java-card">
+                    <h3>🏪 OrderFlow</h3>
                     <p class="project-description">
-                        기후 데이터와 시장 데이터를 결합하여 커피 가격을 예측하는 머신러닝 모델. Random Forest로 ROC-AUC 0.75 달성하고 Streamlit 웹앱으로 배포했습니다.
+                        Spring Boot와 JPA를 활용한 주문 관리 시스템. RESTful API 설계와 데이터베이스 최적화를 통해 효율적인 주문 처리 플로우를 구현했습니다.
                     </p>
                     <div class="project-tech">
-                        <span class="tech-tag">Scikit-learn</span>
-                        <span class="tech-tag">Random Forest</span>
-                        <span class="tech-tag">Streamlit</span>
-                        <span class="tech-tag">FRED API</span>
+                        <span class="tech-tag">Spring Boot</span>
+                        <span class="tech-tag">JPA/Hibernate</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">REST API</span>
                     </div>
                     <span class="project-arrow">→</span>
                 </a>
-                
-                <a href="seoul-commercial-district/index.html" class="project-card ai-card">
-                    <h3>🏙️ Seoul Commercial District</h3>
+
+                <a href="https://github.com/dooseok913/Bookmarket" target="_blank" class="project-card java-card">
+                    <h3>📚 스프링 시큐리티, 아임포트 API</h3>
                     <p class="project-description">
-                        서울 상권 데이터를 분석하고 LLM과 RAG를 활용한 상권 분석 AI 에이전트. 다중 에이전트 시스템으로 맞춤형 창업 컨설팅을 제공합니다.
+                        Spring Security를 활용한 인증/인가 구현과 아임포트 결제 API 연동. 도서 쇼핑몰 프로젝트를 통해 보안과 결제 시스템을 학습했습니다.
                     </p>
                     <div class="project-tech">
-                        <span class="tech-tag">LangChain</span>
-                        <span class="tech-tag">LangGraph</span>
-                        <span class="tech-tag">RAG</span>
-                        <span class="tech-tag">Multi-Agent</span>
+                        <span class="tech-tag">Spring Security</span>
+                        <span class="tech-tag">OAuth2</span>
+                        <span class="tech-tag">아임포트 API</span>
+                        <span class="tech-tag">JSP</span>
                     </div>
                     <span class="project-arrow">→</span>
                 </a>
@@ -441,4 +466,5 @@
         </footer>
     </div>
 </body>
+
 </html>
