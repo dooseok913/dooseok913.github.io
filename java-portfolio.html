@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Portfolio | 최두석</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            color: #333;
+            background: #0f0f23;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 30px;
+            background: rgba(15, 15, 35, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .top-nav a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.2s;
+        }
+
+        .top-nav a:hover { color: white; }
+
+        .nav-title {
+            font-weight: 600;
+            color: white !important;
+            font-size: 1em !important;
+        }
+
+        /* Dot Indicators */
+        .dot-nav {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .dot-nav a {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s;
+            display: block;
+        }
+
+        .dot-nav a.active,
+        .dot-nav a:hover {
+            background: white;
+            transform: scale(1.3);
+        }
+
+        /* Project Section */
+        .project-section {
+            height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 70px 40px 30px;
+            position: relative;
+        }
+
+        .project-section:nth-child(odd) {
+            background: linear-gradient(135deg, #1a1a3e 0%, #0f0f23 100%);
+        }
+
+        .project-section:nth-child(even) {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%);
+        }
+
+        .project-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            max-width: 1300px;
+            width: 100%;
+            align-items: center;
+        }
+
+        /* Left: Code/Architecture display */
+        .code-display {
+            background: #1e1e3a;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .code-display-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .code-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .code-dot.red { background: #ff5f57; }
+        .code-dot.yellow { background: #febc2e; }
+        .code-dot.green { background: #28c840; }
+
+        .code-display-title {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8em;
+            margin-left: 8px;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82em;
+        }
+
+        .api-table th {
+            text-align: left;
+            padding: 8px 10px;
+            color: #43e97b;
+            font-family: 'Fira Code', monospace;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .api-table td {
+            padding: 7px 10px;
+            color: rgba(255, 255, 255, 0.75);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .method-get { color: #4facfe; }
+        .method-post { color: #43e97b; }
+        .method-put { color: #febc2e; }
+        .method-delete { color: #f5576c; }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 8px;
+            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .feature-item-title {
+            color: #f093fb;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .feature-item-desc {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.78em;
+            line-height: 1.5;
+        }
+
+        /* Right: Description */
+        .project-info { color: white; }
+
+        .project-info h2 {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .project-info .project-subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95em;
+            margin-bottom: 18px;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tech-tag {
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        .project-desc {
+            font-size: 0.95em;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 16px;
+        }
+
+        .project-highlights {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .project-highlights li {
+            padding: 4px 0;
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.9em;
+        }
+
+        .project-highlights li::before {
+            content: '▸ ';
+            color: #f093fb;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-github {
+            background: white;
+            color: #0f0f23;
+        }
+
+        .btn-github:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .btn-detail {
+            background: rgba(240, 147, 251, 0.15);
+            color: #f093fb;
+            border: 1px solid rgba(240, 147, 251, 0.3);
+        }
+
+        .btn-detail:hover {
+            background: rgba(240, 147, 251, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.8em;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        @media (max-width: 900px) {
+            .project-inner {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .project-section {
+                height: auto;
+                min-height: 100vh;
+                padding: 80px 20px 40px;
+            }
+
+            .project-info h2 { font-size: 1.5em; }
+            .dot-nav { display: none; }
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .project-info h2 { font-size: 1.3em; }
+            .top-nav { padding: 10px 16px; }
+            .api-table { font-size: 0.75em; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <a href="index.html">← Home</a>
+        <span class="nav-title">Java Portfolio</span>
+        <a href="ai-portfolio.html">AI·Python →</a>
+    </nav>
+
+    <!-- Dot Navigation -->
+    <div class="dot-nav">
+        <a href="#project1" class="active" title="OrderFlow"></a>
+        <a href="#project2" title="Bookmarket"></a>
+    </div>
+
+    <!-- Project 1: OrderFlow -->
+    <section class="project-section" id="project1">
+        <div class="project-inner">
+            <div class="code-display">
+                <div class="code-display-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-display-title">API Endpoints</span>
+                </div>
+                <table class="api-table">
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td class="method-post">POST</td>
+                        <td>/api/members</td>
+                        <td>회원 가입</td>
+                    </tr>
+                    <tr>
+                        <td class="method-post">POST</td>
+                        <td>/api/login</td>
+                        <td>JWT 로그인</td>
+                    </tr>
+                    <tr>
+                        <td class="method-get">GET</td>
+                        <td>/api/items</td>
+                        <td>상품 검색 (QueryDSL)</td>
+                    </tr>
+                    <tr>
+                        <td class="method-post">POST</td>
+                        <td>/api/items</td>
+                        <td>상품 등록</td>
+                    </tr>
+                    <tr>
+                        <td class="method-post">POST</td>
+                        <td>/api/orders</td>
+                        <td>주문 생성</td>
+                    </tr>
+                    <tr>
+                        <td class="method-put">PUT</td>
+                        <td>/api/orders/{id}/cancel</td>
+                        <td>주문 취소 + 재고 복구</td>
+                    </tr>
+                    <tr>
+                        <td class="method-get">GET</td>
+                        <td>/api/orders</td>
+                        <td>주문 내역 조회</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="project-info">
+                <h2>OrderFlow - REST API 주문관리</h2>
+                <p class="project-subtitle">Spring Boot 3.3.5 · Java 21</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Spring Boot</span>
+                    <span class="tech-tag">JPA/Hibernate</span>
+                    <span class="tech-tag">QueryDSL 5.0</span>
+                    <span class="tech-tag">JWT</span>
+                    <span class="tech-tag">MySQL</span>
+                    <span class="tech-tag">Swagger</span>
+                </div>
+                <p class="project-desc">
+                    Spring Boot와 JPA를 활용한 주문 관리 REST API 시스템입니다.
+                    JWT 인증, QueryDSL 동적 검색, 주문 취소 시 재고 복구 등 실무 패턴을 구현했습니다.
+                </p>
+                <ul class="project-highlights">
+                    <li>JWT 기반 인증/인가 (Access Token)</li>
+                    <li>QueryDSL 동적 검색 (이름, 가격, 상태 필터)</li>
+                    <li>주문 취소 비즈니스 로직 (재고 자동 복구)</li>
+                    <li>Swagger API 문서 자동화</li>
+                    <li>개발 기간: 2025.11.10 ~ 12.10</li>
+                </ul>
+                <div class="action-buttons">
+                    <a href="https://github.com/dooseok913/spring-jwt-shop-restapi" target="_blank" class="action-btn btn-github">GitHub</a>
+                    <a href="OrderFlow/index.html" class="action-btn btn-detail">상세 보기</a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-hint">↓ scroll</div>
+    </section>
+
+    <!-- Project 2: Bookmarket -->
+    <section class="project-section" id="project2">
+        <div class="project-inner">
+            <div class="code-display">
+                <div class="code-display-header">
+                    <span class="code-dot red"></span>
+                    <span class="code-dot yellow"></span>
+                    <span class="code-dot green"></span>
+                    <span class="code-display-title">Core Features</span>
+                </div>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="feature-item-title">Spring Security</div>
+                        <div class="feature-item-desc">BCrypt 암호화, ROLE_USER / ROLE_ADMIN 권한 분리</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-item-title">OAuth2 인증</div>
+                        <div class="feature-item-desc">소셜 로그인 연동, 세션 기반 인증 관리</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-item-title">아임포트 결제</div>
+                        <div class="feature-item-desc">외부 결제 API 연동, 결제 검증 및 취소 처리</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-item-title">JPA Entity 설계</div>
+                        <div class="feature-item-desc">회원-주문-상품 연관관계 매핑, Cascade 전략</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-item-title">Log4j2 모니터링</div>
+                        <div class="feature-item-desc">Interceptor 기반 요청 로깅 및 감사 추적</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-item-title">Thymeleaf UI</div>
+                        <div class="feature-item-desc">서버사이드 렌더링, 관리자/사용자 화면 분리</div>
+                    </div>
+                </div>
+            </div>
+            <div class="project-info">
+                <h2>Bookmarket - 온라인 서점</h2>
+                <p class="project-subtitle">Spring Security · 아임포트 결제</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Spring Boot 3.4</span>
+                    <span class="tech-tag">Spring Security</span>
+                    <span class="tech-tag">OAuth2</span>
+                    <span class="tech-tag">아임포트 API</span>
+                    <span class="tech-tag">JPA</span>
+                    <span class="tech-tag">Thymeleaf</span>
+                    <span class="tech-tag">MariaDB</span>
+                </div>
+                <p class="project-desc">
+                    Spring Security를 활용한 인증/인가와 아임포트 결제 API를 연동한 온라인 서점입니다.
+                    회원 관리, 상품 CRUD, 주문/결제 전체 흐름을 구현했습니다.
+                </p>
+                <ul class="project-highlights">
+                    <li>Spring Security + BCrypt 인증/인가</li>
+                    <li>아임포트 외부 결제 API 연동</li>
+                    <li>ROLE_USER / ROLE_ADMIN 권한 분리</li>
+                    <li>Log4j2 + Interceptor 모니터링</li>
+                    <li>JPA Entity 연관관계 설계</li>
+                </ul>
+                <div class="action-buttons">
+                    <a href="https://github.com/dooseok913/Bookmarket" target="_blank" class="action-btn btn-github">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const sections = document.querySelectorAll('.project-section');
+        const dots = document.querySelectorAll('.dot-nav a');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const idx = Array.from(sections).indexOf(entry.target);
+                    dots.forEach(d => d.classList.remove('active'));
+                    if (dots[idx]) dots[idx].classList.add('active');
+                }
+            });
+        }, { threshold: 0.5 });
+
+        sections.forEach(s => observer.observe(s));
+    </script>
+</body>
+
+</html>

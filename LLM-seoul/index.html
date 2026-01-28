@@ -183,16 +183,18 @@
 <body>
     <div class="hero">
         <h1>서울시 창업 AI 컨설턴트</h1>
-        <p>LLM Multi-Agent System 기반 상권 분석 및 창업 추천</p>
-        <p>LangChain + LangGraph + RAG + LSTM</p>
+        <p>LLM Multi-Agent 기반 상권 분석 및 창업 추천 시스템</p>
     </div>
 
     <div class="container">
         <div class="project-card">
-            <h2 class="project-title">LLM 기반 서울시 창업 분석 시스템</h2>
+            <h2 class="project-title">서울시 창업 AI 컨설턴트 (LLM Multi-Agent 기반 상권 분석 시스템)</h2>
+
+            <h3 style="margin-top: 20px;">1. 개요</h3>
             <p class="project-desc">
-                서울시 Open API 데이터와 LSTM 매출 예측 모델을 결합한 Multi-Agent LLM 시스템.
-                RAG 기반 문서 검색과 메타데이터 관리를 통해 신뢰성 있는 창업 컨설팅을 제공합니다.
+                서울시 25개 자치구의 상권 데이터와 LSTM 매출 예측 모델을 결합한 Multi-Agent LLM 시스템입니다.
+                LangChain과 LangGraph를 활용하여 6개의 전문 에이전트가 협업하며, RAG 기반 문서 검색과
+                메타데이터 관리를 통해 신뢰성 있는 창업 컨설팅을 제공합니다.
             </p>
 
             <div class="project-stats">
@@ -201,8 +203,8 @@
                     <div class="stat-label">전문 에이전트</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-value">LangGraph</div>
-                    <div class="stat-label">워크플로우 관리</div>
+                    <div class="stat-value">25개</div>
+                    <div class="stat-label">서울시 자치구</div>
                 </div>
                 <div class="stat">
                     <div class="stat-value">RAG</div>
@@ -214,7 +216,14 @@
                 </div>
             </div>
 
-            <h3>핵심 기술</h3>
+            <h3 style="margin-top: 20px;">2. 사용 기술</h3>
+            <p>
+                Python, LangChain, LangGraph, OpenAI GPT-4o, FAISS Vector Store,
+                TensorFlow/Keras (LSTM), Pandas, NumPy, Gradio, Seoul Open API,
+                LangSmith, ChromaDB, Git/GitHub
+            </p>
+
+            <h3 style="margin-top: 20px;">3. 핵심 기능</h3>
             <p>
                 - LangChain + LangGraph: Multi-Agent 오케스트레이션<br>
                 - OpenAI GPT-4o: LLM 기반 분석 및 추론<br>
@@ -223,7 +232,7 @@
                 - Gradio: 인터랙티브 웹 인터페이스
             </p>
 
-            <h3 style="margin-top: 20px;">Multi-Agent 구성</h3>
+            <h3 style="margin-top: 20px;">4. Multi-Agent 구성</h3>
             <p>
                 - Location Agent: 입지 분석 및 상권 특성 평가<br>
                 - Competition Agent: 경쟁 현황 및 폐업률 분석<br>

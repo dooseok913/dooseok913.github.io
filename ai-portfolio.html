@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI · Python Portfolio | 최두석</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            color: #333;
+            background: #0f0f23;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 30px;
+            background: rgba(15, 15, 35, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .top-nav a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.2s;
+        }
+
+        .top-nav a:hover { color: white; }
+
+        .nav-title {
+            font-weight: 600;
+            color: white !important;
+            font-size: 1em !important;
+        }
+
+        /* Dot Indicators */
+        .dot-nav {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .dot-nav a {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s;
+            display: block;
+        }
+
+        .dot-nav a.active,
+        .dot-nav a:hover {
+            background: white;
+            transform: scale(1.3);
+        }
+
+        /* Project Section - Full Screen */
+        .project-section {
+            height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 70px 40px 30px;
+            position: relative;
+        }
+
+        .project-section:nth-child(odd) {
+            background: linear-gradient(135deg, #1a1a3e 0%, #0f0f23 100%);
+        }
+
+        .project-section:nth-child(even) {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%);
+        }
+
+        .project-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            max-width: 1300px;
+            width: 100%;
+            align-items: center;
+        }
+
+        /* Left: Video */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Right: Description */
+        .project-info {
+            color: white;
+        }
+
+        .project-info h2 {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .project-info .project-subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95em;
+            margin-bottom: 18px;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tech-tag {
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+            color: white;
+        }
+
+        .tag-ai { background: linear-gradient(135deg, #43e97b, #38f9d7); color: #0a2e1a; }
+        .tag-dl { background: linear-gradient(135deg, #a18cd1, #fbc2eb); color: #2d1a4e; }
+        .tag-ml { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .tag-web { background: linear-gradient(135deg, #4facfe, #00f2fe); color: #0a1e3e; }
+
+        .project-desc {
+            font-size: 0.95em;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 16px;
+        }
+
+        .project-highlights {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .project-highlights li {
+            padding: 4px 0;
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.9em;
+        }
+
+        .project-highlights li::before {
+            content: '▸ ';
+            color: #43e97b;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-pdf {
+            background: rgba(255, 255, 255, 0.12);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-pdf:hover {
+            background: rgba(255, 255, 255, 0.22);
+            transform: translateY(-2px);
+        }
+
+        .btn-github {
+            background: white;
+            color: #0f0f23;
+        }
+
+        .btn-github:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .btn-detail {
+            background: rgba(67, 233, 123, 0.15);
+            color: #43e97b;
+            border: 1px solid rgba(67, 233, 123, 0.3);
+        }
+
+        .btn-detail:hover {
+            background: rgba(67, 233, 123, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* Scroll hint */
+        .scroll-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.8em;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .project-inner {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .project-section {
+                height: auto;
+                min-height: 100vh;
+                padding: 80px 20px 40px;
+            }
+
+            .video-container {
+                max-width: 560px;
+                margin: 0 auto;
+            }
+
+            .project-info h2 { font-size: 1.5em; }
+            .dot-nav { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .project-info h2 { font-size: 1.3em; }
+            .top-nav { padding: 10px 16px; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <a href="index.html">← Home</a>
+        <span class="nav-title">AI · Python Portfolio</span>
+        <a href="java-portfolio.html">Java →</a>
+    </nav>
+
+    <!-- Dot Navigation -->
+    <div class="dot-nav">
+        <a href="#project1" class="active" title="LLM 컨설턴트"></a>
+        <a href="#project2" title="매출 예측"></a>
+        <a href="#project3" title="커피 가격 예측"></a>
+        <a href="#project4" title="Listify"></a>
+    </div>
+
+    <!-- Project 1: LLM Seoul -->
+    <section class="project-section" id="project1">
+        <div class="project-inner">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/6F7xIevTgd8" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <h2>서울시 창업 AI 컨설턴트</h2>
+                <p class="project-subtitle">LLM Multi-Agent System</p>
+                <div class="tech-tags">
+                    <span class="tech-tag tag-ai">LangChain</span>
+                    <span class="tech-tag tag-ai">LangGraph</span>
+                    <span class="tech-tag tag-ai">RAG</span>
+                    <span class="tech-tag tag-ai">GPT-4o</span>
+                    <span class="tech-tag tag-dl">LSTM</span>
+                </div>
+                <p class="project-desc">
+                    6개 전문 AI 에이전트가 협력하여 서울시 상권 분석 및 창업 컨설팅을 제공합니다.
+                    Hybrid RAG(FAISS + BM25 + Cross-Encoder)와 LSTM 매출 예측 모델을 결합했습니다.
+                </p>
+                <ul class="project-highlights">
+                    <li>6개 전문 Agent (위치/경쟁/예측/리스크/RAG/리포트)</li>
+                    <li>43,968건 서울 공공데이터 활용</li>
+                    <li>LLM 환각 방지 메커니즘 구현</li>
+                    <li>Conditional Branching 기반 자동 데이터 갱신</li>
+                </ul>
+                <div class="action-buttons">
+                    <a href="LLM-seoul/seoul_business.pdf" class="action-btn btn-pdf" download>PDF 리포트</a>
+                    <a href="https://github.com/dooseok913/seoul_business_ai" target="_blank" class="action-btn btn-github">GitHub</a>
+                    <a href="LLM-seoul/index.html" class="action-btn btn-detail">상세 보기</a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-hint">↓ scroll</div>
+    </section>
+
+    <!-- Project 2: Seoul Commercial District -->
+    <section class="project-section" id="project2">
+        <div class="project-inner">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/oP-4bNPylck" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <h2>서울시 매출 예측 시스템</h2>
+                <p class="project-subtitle">LSTM 시계열 딥러닝</p>
+                <div class="tech-tags">
+                    <span class="tech-tag tag-dl">LSTM</span>
+                    <span class="tech-tag tag-dl">TensorFlow/Keras</span>
+                    <span class="tech-tag tag-dl">Time Series</span>
+                    <span class="tech-tag tag-dl">Deep Learning</span>
+                </div>
+                <p class="project-desc">
+                    25개 자치구 x 60개 업종의 분기별 매출을 LSTM으로 예측합니다.
+                    Random Forest 대비 테스트 데이터에서 4배 우수한 일반화 성능을 달성했습니다.
+                </p>
+                <ul class="project-highlights">
+                    <li>R² Score 0.9851 (98.5% 설명력)</li>
+                    <li>MAE 132.6억원 (Test 기준)</li>
+                    <li>40,000+ 샘플, 2019 Q1 ~ 2025 Q3</li>
+                    <li>순차적 튜닝으로 90% 시간 절약</li>
+                </ul>
+                <div class="action-buttons">
+                    <a href="seoul-commercial-district/assets/서울시_매출예측_딥러닝분석_v2.pdf" class="action-btn btn-pdf" download>PDF 리포트</a>
+                    <a href="https://github.com/dooseok913/seoul-commercial-district" target="_blank" class="action-btn btn-github">GitHub</a>
+                    <a href="seoul-commercial-district/index.html" class="action-btn btn-detail">상세 보기</a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-hint">↓ scroll</div>
+    </section>
+
+    <!-- Project 3: Coffee Price Prediction -->
+    <section class="project-section" id="project3">
+        <div class="project-inner">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/X1lejHx1Wok?si=ZQF_1ZEw07SWP-94" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <h2>커피 가격 예측 시스템</h2>
+                <p class="project-subtitle">머신러닝 + Streamlit 웹앱</p>
+                <div class="tech-tags">
+                    <span class="tech-tag tag-ml">Scikit-learn</span>
+                    <span class="tech-tag tag-ml">Random Forest</span>
+                    <span class="tech-tag tag-ml">Streamlit</span>
+                    <span class="tech-tag tag-ml">FRED API</span>
+                </div>
+                <p class="project-desc">
+                    기후 데이터와 시장 데이터를 결합하여 47년 최고치를 기록한 커피 가격을 예측합니다.
+                    10개 변수 피처 엔지니어링과 5개 모델 비교를 통해 최적 모델을 선정했습니다.
+                </p>
+                <ul class="project-highlights">
+                    <li>ROC-AUC 0.75+ 달성</li>
+                    <li>10개 변수 피처 엔지니어링</li>
+                    <li>커피 가격 시차 (40% 영향), 모멘텀 (15%)</li>
+                    <li>Streamlit 웹앱으로 실시간 예측 배포</li>
+                </ul>
+                <div class="action-buttons">
+                    <a href="coffee/assets/커피가격예측_리포트.pdf" class="action-btn btn-pdf" download>PDF 리포트</a>
+                    <a href="https://github.com/dooseok913/coffee_price_prediction" target="_blank" class="action-btn btn-github">GitHub</a>
+                    <a href="coffee/index.html" class="action-btn btn-detail">상세 보기</a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-hint">↓ scroll</div>
+    </section>
+
+    <!-- Project 4: Listify -->
+    <section class="project-section" id="project4">
+        <div class="project-inner">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/Pv1q1OCSaQY" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <h2>Listify - 음악 플레이리스트 관리</h2>
+                <p class="project-subtitle">Flask + React Full-Stack</p>
+                <div class="tech-tags">
+                    <span class="tech-tag tag-web">Flask</span>
+                    <span class="tech-tag tag-web">React</span>
+                    <span class="tech-tag tag-web">TypeScript</span>
+                    <span class="tech-tag tag-web">Spotify API</span>
+                    <span class="tech-tag tag-web">JWT</span>
+                </div>
+                <p class="project-desc">
+                    Spotify API를 활용한 음악 검색 및 플레이리스트 관리 웹 서비스입니다.
+                    Flask REST API 백엔드와 React(TypeScript) 프론트엔드를 결합한 풀스택 프로젝트입니다.
+                </p>
+                <ul class="project-highlights">
+                    <li>아티스트/장르별 음악 검색 API 구현</li>
+                    <li>JWT 기반 인증/인가 시스템</li>
+                    <li>플레이리스트 CRUD 및 공지사항 API</li>
+                    <li>Git PR 충돌 해결 및 팀 협업 경험</li>
+                </ul>
+                <div class="action-buttons">
+                    <a href="listify/assets/Listify_Project.pdf" class="action-btn btn-pdf" download>PDF 슬라이드</a>
+                    <a href="https://github.com/dooseok913/Listify" target="_blank" class="action-btn btn-github">GitHub</a>
+                    <a href="listify/index.html" class="action-btn btn-detail">상세 보기</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Update dot navigation on scroll
+        const sections = document.querySelectorAll('.project-section');
+        const dots = document.querySelectorAll('.dot-nav a');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const idx = Array.from(sections).indexOf(entry.target);
+                    dots.forEach(d => d.classList.remove('active'));
+                    if (dots[idx]) dots[idx].classList.add('active');
+                }
+            });
+        }, { threshold: 0.5 });
+
+        sections.forEach(s => observer.observe(s));
+    </script>
+</body>
+
+</html>
