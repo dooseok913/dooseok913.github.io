@@ -314,19 +314,19 @@
                     <span class="tech-tag tag-ai">Gemini 2.5</span>
                     <span class="tech-tag tag-ai">RAG</span>
                     <span class="tech-tag tag-ai">ChromaDB</span>
+                    <span class="tech-tag tag-dl">GBRegressor</span>
                     <span class="tech-tag tag-dl">SVM</span>
-                    <span class="tech-tag tag-dl">KNN</span>
                     <span class="tech-tag tag-ml">MLflow</span>
                     <span class="tech-tag tag-ml">LangSmith</span>
                 </div>
                 <p class="project-desc">
                     딥러닝과 LLM을 결합한 지능형 음악 추천 플랫폼입니다.
-                    114,000곡 데이터 기반으로 사용자 취향을 학습하고, 393차원 하이브리드 벡터로 개인화 추천을 제공합니다.
+                    114,000곡 데이터 기반으로 사용자 취향을 학습하고, RAG 기반 개인화 추천 설명을 제공합니다.
                 </p>
                 <ul class="project-highlights">
-                    <li>NDCG@50 = 0.571 (기준선 대비 50배 향상)</li>
-                    <li>GBRegressor 오디오 역추적, SVM 선호도 모델링 담당</li>
-                    <li>Spotify API 제약 → ISRC 기반 데이터 확장으로 해결</li>
+                    <li>GBRegressor 오디오 역추적 모델 (R² 0.85+)</li>
+                    <li>SVM 기반 개인 취향 이진 분류 모델링</li>
+                    <li>Spotify API 제약 → 11만건 과거 데이터 기반 역추적 모델로 해결</li>
                     <li>MLflow 실험 추적 + LangSmith LLM 모니터링 구축</li>
                 </ul>
                 <div class="action-buttons">

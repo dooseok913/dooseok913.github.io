@@ -398,8 +398,8 @@
                     <p>114,000곡</p>
                 </div>
                 <div class="info-card">
-                    <h3>모델 성능</h3>
-                    <p>NDCG@50: 0.571</p>
+                    <h3>역추적 모델</h3>
+                    <p>R² 0.85+</p>
                 </div>
             </div>
         </section>
@@ -538,22 +538,22 @@
         <section class="section">
             <h2>주요 성과</h2>
             <div class="result-box">
-                <h3>모델 성능 향상</h3>
+                <h3>담당 모델 성과</h3>
                 <ul>
-                    <li>Baseline (Manhattan distance) NDCG@50: 0.011</li>
-                    <li>KNN 단일 모달: NDCG@50 = 0.498 (45배 향상)</li>
-                    <li>앙상블 (KNN + SBERT): NDCG@50 = 0.571 (50배 향상)</li>
-                    <li>MMR 다양성 밸런싱으로 정밀도 유지 + 다양성 7% 개선</li>
+                    <li>GBRegressor 오디오 역추적: R² 0.85+ 달성</li>
+                    <li>SVM 선호도 분류: 개인 취향 이진 분류 모델 구현</li>
+                    <li>LLM 응답 최적화: 평균 Latency ~500ms</li>
+                    <li>MLOps 인프라: MLflow + LangSmith 통합 모니터링 구축</li>
                 </ul>
             </div>
 
             <div class="highlight">
                 <h3>핵심 기술 특징</h3>
                 <ul style="margin-left: 20px; line-height: 2;">
-                    <li><strong>멀티모델 앙상블</strong>: 오디오 특성(KNN) + 텍스트 임베딩(Sentence-BERT) 결합, 85% 정확도</li>
-                    <li><strong>393차원 하이브리드 벡터</strong>: 시맨틱 의미와 오디오 특성 통합</li>
-                    <li><strong>RAG 기반 설명 생성</strong>: 검색된 오디오 특성을 활용한 개인화 추천 이유 제공</li>
-                    <li><strong>지속적 학습</strong>: 부정 피드백 50배 가중치로 필터 버블 방지</li>
+                    <li><strong>오디오 특성 역추적</strong>: Spotify API 제약 → 11만건 과거 데이터 기반 GBRegressor로 역추정</li>
+                    <li><strong>SVM 선호도 모델</strong>: 개인 플레이리스트 vs 일반 플레이리스트 이진 분류</li>
+                    <li><strong>RAG 기반 설명 생성</strong>: Gemini 2.5 + ChromaDB로 개인화 추천 이유 제공</li>
+                    <li><strong>MLOps 파이프라인</strong>: MLflow 실험 추적 + LangSmith LLM 호출 모니터링</li>
                 </ul>
             </div>
         </section>
@@ -618,10 +618,10 @@
                     </p>
                     <h5 class="solution">해결 및 깨달음</h5>
                     <ul>
-                        <li><strong>ISRC 활용</strong>: 국제 표준 음악 식별 코드를 기준으로 외부 음악 서비스의 사용자 태그 데이터와 매핑</li>
-                        <li><strong>과거 데이터 활용</strong>: 캐글에서 확보한 11만 건의 과거 오디오 데이터로 역추정 모델 학습</li>
+                        <li><strong>역추적 모델 설계</strong>: 캐글에서 확보한 11만 건의 과거 오디오 데이터로 GBRegressor 역추정 모델 학습</li>
+                        <li><strong>오디오 특성 복원</strong>: 현재 플레이리스트에도 오디오 특성을 보완적으로 부여</li>
                         <li><strong>이진 분류 모델</strong>: 개인 플레이리스트 vs 일반 플레이리스트를 분류하여 개인 취향 학습</li>
-                        <li><strong>핵심 통찰</strong>: API 제약을 한계로 받아들이지 않고, 데이터 구조 재해석과 새로운 특징 설계로 문제 해결</li>
+                        <li><strong>핵심 통찰</strong>: API 제약을 한계로 받아들이지 않고, 과거 데이터 기반 역추적으로 문제 해결</li>
                     </ul>
                 </div>
             </div>
